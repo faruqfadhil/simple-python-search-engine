@@ -4,3 +4,9 @@ using tf.idf algorithm for indexing and text mining
 - python >= 3 
 - django >= 2
 - spicy
+# usage
+
+```bash
+$ python manage.py runserver
+```
+
