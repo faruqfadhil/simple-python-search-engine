@@ -1,0 +1,58 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<html>
+
+<head>
+
+</head>
+<body>
+<div class="row" style="margin-top:3%">
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="text-align:center">
+        <h3>SEARCH SOMETHING</h3>
+            <form action="/search/" method="post"  style="width:100%">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                  {% bootstrap_icon "search" %} Go
+                </button>
+                 {% endbuttons %}
+            </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% if result %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="list-group">
+                {% for row in query.values.tolist %}
+                <a href="{{ row.4 }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h3 class="mb-1">{{ row.3 }}</h3>
+                        <small>{{ row.2 }}</small>
+                    </div>
+                    <p class="mb-1"> {{ row.0 }}</p>
+                    <small>{{ row.4 }}</small>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+</body>
+</html>
