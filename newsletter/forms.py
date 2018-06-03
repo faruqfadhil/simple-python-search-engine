@@ -8,5 +8,5 @@ class SearchForm(forms.Form):
  #go through the official docs for more field details
  query = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Search...'}),label='')
  
-
+ page = forms.CharField(widget=forms.HiddenInput(), initial='1')
  

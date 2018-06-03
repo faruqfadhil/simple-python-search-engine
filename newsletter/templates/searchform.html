@@ -1,35 +1,27 @@
-{# Load the tag library #}
-{% load bootstrap3 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{# Load the tag library #} {% load bootstrap3 %} {# Load CSS and JavaScript #} {% bootstrap_css %} 
+{% bootstrap_javascript %} {# Display django.contrib.messages as Bootstrap alerts #} {% bootstrap_messages %}
 <html>
 
 <head>
 
 </head>
+
 <body>
-<div class="row" style="margin-top:3%">
-    <div class="col-md-2"></div>
-    <div class="col-md-8" style="text-align:center">
-        <h3>SEARCH SOMETHING</h3>
-            <form action="/search/" method="post"  style="width:100%">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                {% buttons %}
+    <div class="row" style="margin-top:3%">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" style="text-align:center">
+            <h3>SEARCH SOMETHING</h3>
+            <form action="/search/" method="get" style="width:100%">
+                {% csrf_token %} {% bootstrap_form form %} {% buttons %}
                 <button type="submit" class="btn btn-primary">
-                  {% bootstrap_icon "search" %} Go
+                    {% bootstrap_icon "search" %} Go
                 </button>
-                 {% endbuttons %}
+                {% endbuttons %}
             </form>
+        </div>
+        <div class="col-md-2"></div>
     </div>
-    <div class="col-md-2"></div>
-</div>
-{% if result %}
+    {% if result %}
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
@@ -37,11 +29,11 @@
                 {% for row in query.values.tolist %}
                 <a href="{{ row.4 }}" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
-                        <h3 class="mb-1">{{ row.3 }}</h3>
+                        <h4 class="mb-1" style="color:#1a0dab">{{ row.0 }}</h4>
                         <small>{{ row.2 }}</small>
                     </div>
-                    <p class="mb-1"> {{ row.0 }}</p>
-                    <small>{{ row.4 }}</small>
+                    <p class="mb-1"> {{ row.1|slice:":250" }}...</p>
+                    <small style="color:#006621">{{ row.4 }}</small>
                 </a>
                 {% endfor %}
             </div>
@@ -51,8 +43,34 @@
         </div>
 
     </div>
-
+    <div class="row" style="text-align:center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="http://127.0.0.1:8000/search/?query={{ q }}&page={{p|add:"-1"}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+          {% for i in range %}
+            {% if p == i|add:"+1" %}
+            <li class="page-item active"><a class="page-link" href="http://127.0.0.1:8000/search/?query={{ q }}&page={{i|add:"+1"}}">{{i|add:"+1"}}</a></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="http://127.0.0.1:8000/search/?query={{ q }}&page={{i|add:"+1"}}">{{i|add:"+1"}}</a></li>
+            {% endif %}
+        
+          {% endfor %}
+          <li class="page-item">
+                <a class="page-link" href="http://127.0.0.1:8000/search/?query={{ q }}&page={{p|add:"+1"}}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+          </li>
+        </ul>
+    </nav>
+    </div>
 {% endif %}
 
 </body>
+
 </html>

@@ -76,6 +76,8 @@ class SearchEngine:
 
 
 # anu = model.search("asian games jakarta")
+# aa = anu.values.tolist
+# print(aa)
 # for index,row in anu.iterrows():
 #     print(row['headline'])
 

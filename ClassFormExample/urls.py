@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from newsletter import views as newsletter_views
+from django.conf.urls import url
 
 urlpatterns = [
-    path('search/', newsletter_views.searchform),
+    # path('search/$', newsletter_views.searchform),
+    url(r'^search/$', newsletter_views.searchform),
     path('admin/', admin.site.urls),
 ]
